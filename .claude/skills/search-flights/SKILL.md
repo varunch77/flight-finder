@@ -48,7 +48,7 @@ Translate the user's answer into `RankingWeights`:
 Run this Python code using the Bash tool (with the project venv):
 
 ```python
-source /Users/varun/Projects/flight-finder/.venv/bin/activate && python3 -c "
+source .venv/bin/activate && python3 -c "
 import json
 from flight_finder.scraper import FlightSearchParams, search_flights
 from flight_finder.ranking import RankingWeights, rank_flights
@@ -139,7 +139,7 @@ If the user wants to refine, loop back to the relevant step. No need to re-ask p
 
 ## Important Notes
 
-- Always activate the venv: `source /Users/varun/Projects/flight-finder/.venv/bin/activate`
+- Always activate the venv: `source .venv/bin/activate`
 - The scraper has built-in retry (3 attempts with exponential backoff). If it still fails, it's likely a temporary Google Flights issue.
 - Rate limiting (1.5s between requests) is built in — no need to add delays.
 - For round-trip, both `departure_date` and `return_date` are required.

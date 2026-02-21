@@ -35,14 +35,14 @@ If `$ARGUMENTS` is empty, search ALL upcoming games.
 Run this Python code using the Bash tool:
 
 ```python
-source /Users/varun/Projects/flight-finder/.venv/bin/activate && python3 -c "
+source .venv/bin/activate && python3 -c "
 import csv
 import json
 from datetime import datetime, date
 
 today = date.today()
 games = []
-with open('/Users/varun/Projects/flight-finder/lakers_schedule.csv') as f:
+with open('lakers_schedule.csv') as f:
     reader = csv.DictReader(f)
     for row in reader:
         game_date = datetime.strptime(row['Date'].strip(), '%m/%d/%Y').date()
@@ -83,7 +83,7 @@ For each upcoming game, determine the destination airport and preferred origin u
 Run the search script for each game. **Important:** If there are many games (>10), warn the user it will take a few minutes due to rate limiting, then proceed. Use a single Python script that loops through all games:
 
 ```python
-source /Users/varun/Projects/flight-finder/.venv/bin/activate && python3 -c "
+source .venv/bin/activate && python3 -c "
 import csv, json, sys
 from datetime import datetime, date, timedelta
 from flight_finder.scraper import FlightSearchParams, search_flights
@@ -107,7 +107,7 @@ today = date.today()
 
 # --- Read schedule ---
 games = []
-with open('/Users/varun/Projects/flight-finder/lakers_schedule.csv') as f:
+with open('lakers_schedule.csv') as f:
     reader = csv.DictReader(f)
     for row in reader:
         game_date = datetime.strptime(row['Date'].strip(), '%m/%d/%Y').date()
@@ -231,8 +231,8 @@ After the table:
 
 ## Important Notes
 
-- Always activate the venv: `source /Users/varun/Projects/flight-finder/.venv/bin/activate`
+- Always activate the venv: `source .venv/bin/activate`
 - Rate limiting is 1.5s between requests. Round-trip = 2 requests per search. With 3 airports per game, budget ~9s per game. 10 games ≈ 90s, 20 games ≈ 3 min.
 - The scraper has built-in retry (3 attempts with exponential backoff). If a search fails, it's likely a temporary Google Flights issue — note it and move on.
-- Schedule CSV is at `/Users/varun/Projects/flight-finder/lakers_schedule.csv` with columns: `Date,Game_Time,Home_Away,Location,Game_Price`
+- Schedule CSV is at `lakers_schedule.csv` with columns: `Date,Game_Time,Home_Away,Location,Game_Price`
 - Some searches may return incomplete flight data (missing airline/duration). Flag these honestly rather than presenting bad data.
